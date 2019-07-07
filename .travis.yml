@@ -1,7 +1,9 @@
 sudo: required
+
 services:
   - docker
 
 script:
+  - ls -lah
   - bash build-all
   - bash docker-push
