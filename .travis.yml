@@ -6,4 +6,3 @@ services:
 script:
   - ls -lah
   - bash build-all.sh
-  - bash docker-push.sh
