@@ -44,3 +44,4 @@ COPY --from=builder $BUILD_PATH/$APPNAME app
 USER go-user
 
 ENTRYPOINT ["./app"]
+CMD ["-grpc-server-host", "grpc-server:50051"]
