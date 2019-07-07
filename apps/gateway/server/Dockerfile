@@ -44,4 +44,4 @@ COPY --from=builder $BUILD_PATH/$APPNAME app
 USER go-user
 
 ENTRYPOINT ["./app"]
-CMD ["-proxy-port", "8080"]
+CMD ["-proxy-port", "8080", "-grpc-server-endpoint","grpc-cluster-ip-service:50051"]
