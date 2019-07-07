@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: grpc-server
+  template:
+    metadata:
+      labels:
+        component: grpc-server
+    spec:
+      containers:
+        - name: grpc-server
+          image: benjaminslabbert/grpc-linkerd-k8s-example-grpc-server
+          ports:
+            - containerPort: 50051

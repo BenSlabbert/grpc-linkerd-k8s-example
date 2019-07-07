@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-gateway-server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: grpc-gateway-server
+  template:
+    metadata:
+      labels:
+        component: grpc-gateway-server
+    spec:
+      containers:
+        - name: grpc-gateway-server
+          image: benjaminslabbert/grpc-linkerd-k8s-example-gateway-server
+          ports:
+            - containerPort: 8080

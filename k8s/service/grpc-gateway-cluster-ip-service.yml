@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-gateway-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: grpc-gateway-server
+  ports:
+    - port: 8080 # port used by other pods to connect to this service
+      targetPort: 8080 # port of the container inside this service

@@ -1,0 +1,13 @@
+syntax = "proto3";
+package pb;
+
+message StringMessage {
+    string value = 1;
+}
+
+message PingMessage {
+}
+
+message PongMessage {
+    string ip = 1;
+}

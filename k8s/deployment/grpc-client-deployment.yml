@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-gateway-client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: grpc-gateway-client
+  template:
+    metadata:
+      labels:
+        component: grpc-gateway-client
+    spec:
+      containers:
+        - name: grpc-gateway-client
+          image: benjaminslabbert/grpc-linkerd-k8s-example-grpc-client

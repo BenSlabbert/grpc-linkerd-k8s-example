@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-services
+  annotations:
+    kubernetes.io/ingress.class: nginx # config rule, ingress controller, based on nginx
+    nginx.ingress.kubernetes.io/rewrite-target: / # if request has /api in it, rewrite it to just /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: grpc-cluster-ip-service
+              servicePort: 50051
+          - path: /rest/
+            backend:
+              serviceName: grpc-gateway-cluster-ip-service
+              servicePort: 8080
