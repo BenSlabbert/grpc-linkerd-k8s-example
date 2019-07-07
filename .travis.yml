@@ -3,5 +3,5 @@ services:
   - docker
 
 script:
-  - ./build-all
-  - ./docker-push
+  - bash build-all
+  - bash docker-push
