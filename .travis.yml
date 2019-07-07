@@ -3,12 +3,6 @@ sudo: required
 services:
   - docker
 
-language: go
-
-go:
-  - 1.12.x
-  - master
-
 script:
   - ls -lah
   - bash build-all.sh
