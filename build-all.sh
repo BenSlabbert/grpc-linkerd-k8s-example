@@ -19,5 +19,3 @@ docker push benjaminslabbert/grpc-linkerd-k8s-example-gateway-client:${VERSION}
 docker push benjaminslabbert/grpc-linkerd-k8s-example-gateway-server:${VERSION}
 docker push benjaminslabbert/grpc-linkerd-k8s-example-grpc-client:${VERSION}
 docker push benjaminslabbert/grpc-linkerd-k8s-example-grpc-server:${VERSION}
-
-wait $(jobs)
