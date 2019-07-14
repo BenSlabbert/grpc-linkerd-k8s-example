@@ -7,21 +7,31 @@ echo "Building all Images"
 echo "###########################"
 echo "# Building Gateway Client #"
 echo "###########################"
-./build-gateway-client.sh ${VERSION}
+docker build -t benjaminslabbert/grpc-linkerd-k8s-example-gateway-client:${VERSION} -f apps/gateway/client/Dockerfile .
+
 
 echo "###########################"
 echo "# Building Gateway Server #"
 echo "###########################"
-./build-gateway-server.sh ${VERSION}
+docker build -t benjaminslabbert/grpc-linkerd-k8s-example-gateway-server:${VERSION} -f apps/gateway/server/Dockerfile .
 
 echo "########################"
 echo "# Building gRPC Client #"
 echo "########################"
-./build-grpc-client.sh ${VERSION}
+docker build -t benjaminslabbert/grpc-linkerd-k8s-example-grpc-client:${VERSION} -f apps/grpc/client/Dockerfile .
 
 echo "########################"
 echo "# Building gRPC Server #"
 echo "########################"
-./build-grpc-server.sh ${VERSION}
+docker build -t benjaminslabbert/grpc-linkerd-k8s-example-grpc-server:${VERSION} -f apps/grpc/server/Dockerfile .
 
-./docker-push.sh  ${VERSION}
+echo "#########################"
+echo "# Pushing to Docker hub #"
+echo "#########################"
+
+echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+
+docker push benjaminslabbert/grpc-linkerd-k8s-example-gateway-client:$1
+docker push benjaminslabbert/grpc-linkerd-k8s-example-gateway-server:$1
+docker push benjaminslabbert/grpc-linkerd-k8s-example-grpc-client:$1
+docker push benjaminslabbert/grpc-linkerd-k8s-example-grpc-server:$1
