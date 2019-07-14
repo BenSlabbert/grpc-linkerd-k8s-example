@@ -4,5 +4,4 @@ services:
   - docker
 
 script:
-  - ls -lah
   - bash build-all.sh
