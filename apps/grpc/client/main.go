@@ -15,7 +15,7 @@ var (
 )
 
 func run() {
-	log.Println("Staring gRPC client")
+	log.Printf("Staring gRPC client to server: %v", *grpcServerHost)
 
 	cc, err := grpc.Dial(*grpcServerHost, grpc.WithInsecure())
 
