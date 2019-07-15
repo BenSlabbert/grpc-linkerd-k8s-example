@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=1.0.4
+VERSION=1.0.4-$(date +%s)
 
 echo "Building all Images"
 
