@@ -6,12 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      component: grpc-gateway-client
+      component: grpc-client
   template:
     metadata:
       labels:
-        component: grpc-gateway-client
+        component: grpc-client
     spec:
       containers:
-        - name: grpc-gateway-client
-          image: benjaminslabbert/grpc-linkerd-k8s-example-grpc-client:1.0.0
+        - name: grpc-client
+          image: benjaminslabbert/grpc-linkerd-k8s-example-grpc-client:1.0.4
+          ports:
+            - containerPort: 50051

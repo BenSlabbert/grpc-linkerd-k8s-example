@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      component: grpc-server
+      component: grpc-backend
   template:
     metadata:
       labels:
-        component: grpc-server
+        component: grpc-backend
     spec:
       containers:
-        - name: grpc-server
-          image: benjaminslabbert/grpc-linkerd-k8s-example-grpc-server:1.0.0
+        - name: grpc-backend
+          image: benjaminslabbert/grpc-linkerd-k8s-example-grpc-server:1.0.4
           ports:
             - containerPort: 50051

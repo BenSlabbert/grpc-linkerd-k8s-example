@@ -14,17 +14,16 @@ import (
 	"os/signal"
 )
 
-var (
-	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:50051", "gRPC server endpoint")
-)
-
 func run() error {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
+	serverHost := os.Getenv("SERVER_HOST")
+	serverPort := os.Getenv("SERVER_PORT")
+
 	// register gRPC server
-	lis, err := net.Listen("tcp", *grpcServerEndpoint)
+	lis, err := net.Listen("tcp", serverHost+":"+serverPort)
 
 	if err != nil {
 		log.Fatalf("Failed to listen : %v", err)

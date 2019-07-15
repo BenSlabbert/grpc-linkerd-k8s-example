@@ -35,6 +35,9 @@ ARG BUILD_PATH
 ARG APPNAME
 ARG CERT_PATH
 
+ENV SERVER_HOST=grpc-backend
+ENV SERVER_PORT=50051
+
 COPY --from=alpine $CERT_PATH /etc/ssl/certs/
 COPY --from=alpine /etc/passwd /etc/passwd
 
@@ -44,4 +47,3 @@ COPY --from=builder $BUILD_PATH/$APPNAME app
 USER go-user
 
 ENTRYPOINT ["./app"]
-CMD ["-grpc-server-host", "grpc-backend:50051"]

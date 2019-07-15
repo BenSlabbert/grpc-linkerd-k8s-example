@@ -7,17 +7,17 @@ import (
 	"grpc-linkerd-k8s-example/grpc/client"
 	"grpc-linkerd-k8s-example/pb"
 	"log"
+	"os"
 	"time"
 )
 
-var (
-	grpcServerHost = flag.String("grpc-server-host", "localhost:50051", "gRPC server endpoint")
-)
-
 func run() {
-	log.Printf("Staring gRPC client to server: %v", *grpcServerHost)
+	serverHost := os.Getenv("SERVER_HOST")
+	serverPort := os.Getenv("SERVER_PORT")
 
-	cc, err := grpc.Dial(*grpcServerHost, grpc.WithInsecure())
+	log.Printf("Staring gRPC client to server host: %s port: %s", serverHost, serverPort)
+
+	cc, err := grpc.Dial(serverHost+":"+serverPort, grpc.WithInsecure())
 
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
