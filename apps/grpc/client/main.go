@@ -12,12 +12,11 @@ import (
 )
 
 func run() {
-	serverHost := os.Getenv("SERVER_HOST")
-	serverPort := os.Getenv("SERVER_PORT")
+	serverHost := os.Getenv("GRPC_HOST")
 
-	log.Printf("Staring gRPC client to server host: %s port: %s", serverHost, serverPort)
+	log.Printf("Staring gRPC client to server host: %s", serverHost)
 
-	cc, err := grpc.Dial(serverHost+":"+serverPort, grpc.WithInsecure())
+	cc, err := grpc.Dial(serverHost, grpc.WithInsecure())
 
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)

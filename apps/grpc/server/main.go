@@ -3,6 +3,7 @@ package main
 import (
 	"context" // Use "golang.org/x/net/context" for Golang version <= 1.6
 	"flag"
+	"fmt"
 	"github.com/golang/glog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -19,11 +20,10 @@ func run() error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	serverHost := os.Getenv("SERVER_HOST")
-	serverPort := os.Getenv("SERVER_PORT")
+	serverPort := os.Getenv("GRPC_PORT")
 
 	// register gRPC server
-	lis, err := net.Listen("tcp", serverHost+":"+serverPort)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", serverPort))
 
 	if err != nil {
 		log.Fatalf("Failed to listen : %v", err)

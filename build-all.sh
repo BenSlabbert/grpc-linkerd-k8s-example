@@ -2,7 +2,7 @@
 
 VERSION=1.0.4-$(date +%s)
 
-echo "Building all Images"
+echo "Building all Images with version: ${VERSION}"
 
 docker build -t benjaminslabbert/grpc-linkerd-k8s-example-gateway-client:${VERSION} -f apps/gateway/client/Dockerfile .
 docker build -t benjaminslabbert/grpc-linkerd-k8s-example-gateway-server:${VERSION} -f apps/gateway/server/Dockerfile .
