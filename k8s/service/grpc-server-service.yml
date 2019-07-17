@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: grpc-backend
+  name: grpc-svc
 spec:
-  type: ClusterIP
+  clusterIP: None
   selector:
-    component: grpc-backend
+    component: grpc-svc
   ports:
-    - port: 50051 # port used by other pods to connect to this service
-      targetPort: 50051 # port of the container inside this service
+    - name: grpc
+      port: 50051
+      targetPort: 50051
