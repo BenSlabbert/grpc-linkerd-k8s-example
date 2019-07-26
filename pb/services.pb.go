@@ -9,6 +9,8 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -195,6 +197,26 @@ type YourServiceServer interface {
 	EchoServerStream(*StringMessage, YourService_EchoServerStreamServer) error
 	EchoClientStream(YourService_EchoClientStreamServer) error
 	EchoBiDiStream(YourService_EchoBiDiStreamServer) error
+}
+
+// UnimplementedYourServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedYourServiceServer struct {
+}
+
+func (*UnimplementedYourServiceServer) Echo(ctx context.Context, req *StringMessage) (*StringMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+}
+func (*UnimplementedYourServiceServer) Ping(ctx context.Context, req *PingMessage) (*PongMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (*UnimplementedYourServiceServer) EchoServerStream(req *StringMessage, srv YourService_EchoServerStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method EchoServerStream not implemented")
+}
+func (*UnimplementedYourServiceServer) EchoClientStream(srv YourService_EchoClientStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method EchoClientStream not implemented")
+}
+func (*UnimplementedYourServiceServer) EchoBiDiStream(srv YourService_EchoBiDiStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method EchoBiDiStream not implemented")
 }
 
 func RegisterYourServiceServer(s *grpc.Server, srv YourServiceServer) {
