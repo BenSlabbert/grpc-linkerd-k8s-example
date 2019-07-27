@@ -2,11 +2,12 @@ package main
 
 import (
 	"flag"
-	"github.com/golang/glog"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"grpc-linkerd-k8s-example/grpc/client"
 	"grpc-linkerd-k8s-example/pb"
-	"log"
+	"net/http"
 	"os"
 	"time"
 )
@@ -15,6 +16,13 @@ func run() {
 	serverHost := os.Getenv("GRPC_HOST")
 
 	log.Printf("Staring gRPC client to server host: %s", serverHost)
+
+	// metrics
+	go func() {
+		log.Info("Setting up metrics")
+		http.Handle("/metrics", promhttp.Handler())
+		http.ListenAndServe(":2112", nil)
+	}()
 
 	cc, err := grpc.Dial(serverHost, grpc.WithInsecure())
 
@@ -40,8 +48,7 @@ func run() {
 
 func main() {
 	flag.Parse()
-	defer glog.Flush()
 
 	run()
-	glog.Fatal("Failed to call grpc server")
+	log.Fatal("Failed to call grpc server")
 }

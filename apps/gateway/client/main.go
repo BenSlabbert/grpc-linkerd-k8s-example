@@ -2,9 +2,10 @@ package main
 
 import (
 	"flag"
-	"github.com/golang/glog"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 	"gopkg.in/resty.v1"
-	"log"
+	"net/http"
 	"time"
 )
 
@@ -17,6 +18,14 @@ var (
 )
 
 func run() {
+
+	// metrics
+	go func() {
+		log.Info("Setting up metrics")
+		http.Handle("/metrics", promhttp.Handler())
+		http.ListenAndServe(":2112", nil)
+	}()
+
 	for {
 		// GET request
 		resp, err := resty.R().Get("http://" + *gateway + "/v1/example/ping")
@@ -48,8 +57,7 @@ func run() {
 
 func main() {
 	flag.Parse()
-	defer glog.Flush()
 
 	run()
-	glog.Fatal("Failed to call grpc gateway")
+	log.Fatal("Failed to call grpc gateway")
 }

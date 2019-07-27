@@ -3,12 +3,12 @@ package main
 import (
 	"context" // Use "golang.org/x/net/context" for Golang version <= 1.6
 	"flag"
-	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"grpc-linkerd-k8s-example/grpc/client"
 	"grpc-linkerd-k8s-example/pb"
-	"log"
 	"net/http"
 )
 
@@ -21,6 +21,13 @@ func run() error {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
+
+	// metrics
+	go func() {
+		log.Info("Setting up metrics")
+		http.Handle("/metrics", promhttp.Handler())
+		http.ListenAndServe(":2112", nil)
+	}()
 
 	// Register gRPC server endpoint
 	// Note: Make sure the gRPC server is running properly and accessible
@@ -69,9 +76,8 @@ func serveSwagger(h http.Handler) http.Handler {
 
 func main() {
 	flag.Parse()
-	defer glog.Flush()
 
 	if err := run(); err != nil {
-		glog.Fatal(err)
+		log.Fatal(err)
 	}
 }
